@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import CalendarGrid from './components/CalenderGrid'
 import FiltersPanel, { type Filters, applyFilters } from './components/FiltersPanel'
 import Modal from './components/Modal'
