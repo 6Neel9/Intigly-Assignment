@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Task, Category } from "../types/taks"
 
 interface Props {
@@ -10,6 +9,8 @@ interface Props {
   onMouseDown: (e: React.MouseEvent) => void
   onLeftHandleDown: (e: React.MouseEvent) => void
   onRightHandleDown: (e: React.MouseEvent) => void
+  onEdit?: (task: Task) => void         // NEW
+  onDelete?: (id: string) => void       // NEW
 }
 
 const colorClass = (c: Category) =>
@@ -19,7 +20,8 @@ const colorClass = (c: Category) =>
 
 export default function TaskItem({
   task, leftPct, widthPct, topPx, dim,
-  onMouseDown, onLeftHandleDown, onRightHandleDown
+  onMouseDown, onLeftHandleDown, onRightHandleDown,
+  onEdit, onDelete
 }: Props) {
   return (
     <div
@@ -34,6 +36,26 @@ export default function TaskItem({
       <div style={{ flex: 1 }} />
       <div className="pill">{task.category}</div>
       <div className="handle" data-handle onMouseDown={onRightHandleDown} />
+
+      {/* --- NEW ACTIONS --- */}
+      <div className="task-actions">
+        {onEdit && (
+          <button
+            className="task-btn edit-btn"
+            onClick={(e) => { e.stopPropagation(); onEdit(task) }}
+          >
+            ✎
+          </button>
+        )}
+        {onDelete && (
+          <button
+            className="task-btn delete-btn"
+            onClick={(e) => { e.stopPropagation(); onDelete(task.id) }}
+          >
+            🗑
+          </button>
+        )}
+      </div>
     </div>
   )
 }
